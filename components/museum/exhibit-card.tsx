@@ -11,7 +11,7 @@ export function ExhibitCard({ exhibit }: ExhibitCardProps) {
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="font-mono text-xs uppercase tracking-[0.35em] text-muted">
-            {exhibit.accessionNumber}
+            {exhibit.developer}
           </p>
           <h2 className="mt-4 text-2xl leading-tight">{exhibit.title}</h2>
         </div>
@@ -19,13 +19,20 @@ export function ExhibitCard({ exhibit }: ExhibitCardProps) {
           {exhibit.year}
         </p>
       </div>
-      <p className="mt-4 text-muted">{exhibit.summary}</p>
+      <p className="mt-4 text-muted">{exhibit.description}</p>
       <div className="mt-6 flex items-center justify-between gap-4">
-        <span className="rounded-full border border-border px-3 py-1 font-mono text-[11px] uppercase tracking-[0.28em] text-muted">
-          {exhibit.discipline}
-        </span>
+        <div className="flex flex-wrap gap-2">
+          {exhibit.tags.slice(0, 2).map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full border border-border px-3 py-1 font-mono text-[11px] uppercase tracking-[0.28em] text-muted"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
         <Link
-          href={`/museum/${exhibit.slug}`}
+          href={`/museum/exhibits/${exhibit.slug}`}
           className="font-mono text-xs uppercase tracking-[0.35em] text-foreground"
         >
           View artifact
@@ -34,4 +41,3 @@ export function ExhibitCard({ exhibit }: ExhibitCardProps) {
     </article>
   );
 }
-

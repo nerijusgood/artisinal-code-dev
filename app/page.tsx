@@ -86,15 +86,15 @@ export default async function HomePage() {
             {exhibits.slice(0, 2).map((exhibit) => (
               <Link
                 key={exhibit.slug}
-                href={`/museum/${exhibit.slug}`}
+                href={`/museum/exhibits/${exhibit.slug}`}
                 className="grid gap-4 rounded-[1.75rem] border border-border bg-surface p-6 shadow-[var(--shadow)] md:grid-cols-[1fr_auto]"
               >
                 <div>
                   <p className="font-mono text-xs uppercase tracking-[0.35em] text-muted">
-                    {exhibit.accessionNumber}
+                    {exhibit.developer}
                   </p>
                   <h2 className="mt-3 text-3xl">{exhibit.title}</h2>
-                  <p className="mt-3 text-muted">{exhibit.summary}</p>
+                  <p className="mt-3 text-muted">{exhibit.description}</p>
                 </div>
                 <div className="self-start rounded-full border border-border px-3 py-1 font-mono text-[11px] uppercase tracking-[0.28em] text-muted">
                   {exhibit.year}
@@ -107,4 +107,3 @@ export default async function HomePage() {
     </>
   );
 }
-

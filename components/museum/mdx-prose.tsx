@@ -45,4 +45,10 @@ export const mdxComponents = {
       {...props}
     />
   ),
+  pre: ({ className = "", ...props }: ComponentPropsWithoutRef<"pre">) => (
+    <pre
+      className={`mt-6 overflow-x-auto rounded-[1.5rem] border border-border bg-[#201711] px-5 py-4 font-mono text-sm leading-7 text-[#f5ecdc] ${className}`.trim()}
+      {...props}
+    />
+  ),
 };

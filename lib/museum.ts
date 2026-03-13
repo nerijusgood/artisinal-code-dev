@@ -9,10 +9,12 @@ const exhibitsDirectory = path.join(process.cwd(), "content/exhibits");
 
 export type ExhibitFrontmatter = {
   title: string;
-  summary: string;
   year: string;
-  discipline: string;
-  accessionNumber: string;
+  developer: string;
+  description: string;
+  tags: string[];
+  artifact: string;
+  status?: string;
 };
 
 export type ExhibitListItem = ExhibitFrontmatter & {
@@ -47,6 +49,26 @@ export async function getExhibits(): Promise<ExhibitListItem[]> {
   );
 
   return exhibits.sort((left, right) => right.year.localeCompare(left.year));
+}
+
+export async function getArchiveGroups() {
+  const exhibits = await getExhibits();
+  const byYear = new Map<string, ExhibitListItem[]>();
+  const byTag = new Map<string, ExhibitListItem[]>();
+
+  for (const exhibit of exhibits) {
+    byYear.set(exhibit.year, [...(byYear.get(exhibit.year) ?? []), exhibit]);
+
+    for (const tag of exhibit.tags) {
+      byTag.set(tag, [...(byTag.get(tag) ?? []), exhibit]);
+    }
+  }
+
+  return {
+    exhibits,
+    years: [...byYear.entries()].sort((a, b) => b[0].localeCompare(a[0])),
+    tags: [...byTag.entries()].sort((a, b) => a[0].localeCompare(b[0])),
+  };
 }
 
 export async function getExhibitBySlug(
