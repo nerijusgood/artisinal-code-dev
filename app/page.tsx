@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { HomeExhibitionLab } from "@/components/interactive/home-exhibition-lab";
+import { CodeArtifact } from "@/components/ui/code-artifact";
 import { Container } from "@/components/ui/container";
 import { getExhibits } from "@/lib/museum";
+import { highlightCode } from "@/lib/shiki";
 
 const sellingPoints = [
   {
@@ -28,6 +30,13 @@ const sellingPoints = [
 
 export default async function HomePage() {
   const exhibits = await getExhibits();
+  const heroArtifact = await highlightCode("// TODO: refactor this later", "typescript");
+  const highlightedExhibits = await Promise.all(
+    exhibits.slice(0, 3).map(async (exhibit) => ({
+      slug: exhibit.slug,
+      highlighted: await highlightCode(exhibit.artifact, exhibit.artifactLanguage),
+    })),
+  );
 
   return (
     <>
@@ -80,19 +89,13 @@ export default async function HomePage() {
           </div>
 
           <div className="space-y-6">
-            <div className="code-panel p-5">
-              <div className="flex items-center justify-between gap-3">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#d6c4ad]">
-                  Recovered artifact
-                </p>
-                <span className="rounded-full border border-[#5d4636] px-3 py-1 font-mono text-[11px] uppercase tracking-[0.28em] text-[#d6c4ad]">
-                  TODO / 2017
-                </span>
-              </div>
-              <pre className="mt-5 overflow-x-auto font-mono text-sm leading-7">
-                <code>{`// TODO: refactor this later`}</code>
-              </pre>
-              <p className="mt-4 text-sm leading-6 text-[#d6c4ad]">
+            <div>
+              <CodeArtifact
+                label="Recovered artifact"
+                filename="src/runtime/todo.ts"
+                highlighted={heroArtifact}
+              />
+              <p className="mt-4 text-sm leading-6 text-muted">
                 Museum label: unresolved, stable in production, cited in meetings.
               </p>
             </div>
@@ -171,13 +174,16 @@ export default async function HomePage() {
                     </span>
                   ))}
                 </div>
-                <div className="code-panel mt-6 p-4">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#d6c4ad]">
-                    Preserved snippet
-                  </p>
-                  <pre className="mt-3 overflow-x-auto font-mono text-xs leading-6">
-                    <code>{exhibit.artifact}</code>
-                  </pre>
+                <div className="mt-6">
+                  <CodeArtifact
+                    label="Preserved snippet"
+                    filename={exhibit.artifactFilename}
+                    highlighted={
+                      highlightedExhibits.find((item) => item.slug === exhibit.slug)!
+                        .highlighted
+                    }
+                    showLineNumbers={exhibit.artifactLineNumbers}
+                  />
                 </div>
               </Link>
             ))}

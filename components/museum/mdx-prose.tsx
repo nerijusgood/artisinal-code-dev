@@ -1,4 +1,6 @@
-import type { ComponentPropsWithoutRef } from "react";
+import type { ComponentPropsWithoutRef, ReactElement } from "react";
+import { CodeArtifact } from "@/components/ui/code-artifact";
+import { highlightCode } from "@/lib/shiki";
 
 function createHeading(tag: "h1" | "h2" | "h3") {
   return function Heading({
@@ -45,10 +47,25 @@ export const mdxComponents = {
       {...props}
     />
   ),
-  pre: ({ className = "", ...props }: ComponentPropsWithoutRef<"pre">) => (
-    <pre
-      className={`mt-6 overflow-x-auto rounded-[1.5rem] border border-border bg-[#201711] px-5 py-4 font-mono text-sm leading-7 text-[#f5ecdc] ${className}`.trim()}
-      {...props}
-    />
-  ),
+  pre: async ({
+    children,
+  }: ComponentPropsWithoutRef<"pre"> & {
+    children?: ReactElement<{ children?: string; className?: string }>;
+  }) => {
+    const child = children;
+    const code = child?.props?.children;
+    const className = child?.props?.className ?? "";
+    const language = className.replace("language-", "") || "typescript";
+
+    if (typeof code !== "string") {
+      return null;
+    }
+
+    const highlighted = await highlightCode(code, language);
+    return (
+      <div className="mt-6">
+        <CodeArtifact highlighted={highlighted} />
+      </div>
+    );
+  },
 };

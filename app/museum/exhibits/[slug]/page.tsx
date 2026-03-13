@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
-import { CodeArtifact } from "@/components/museum/code-artifact";
 import { Placard } from "@/components/museum/placard";
+import { CodeArtifact } from "@/components/ui/code-artifact";
 import { Container } from "@/components/ui/container";
 import { getExhibitBySlug, getExhibitSlugs } from "@/lib/museum";
+import { highlightCode } from "@/lib/shiki";
 
 export async function generateStaticParams() {
   const slugs = await getExhibitSlugs();
@@ -24,6 +25,8 @@ export default async function ExhibitPage({ params }: ExhibitPageProps) {
   if (!exhibit) {
     notFound();
   }
+
+  const highlighted = await highlightCode(exhibit.artifact, exhibit.artifactLanguage);
 
   return (
     <Container className="grid gap-10 py-16 lg:grid-cols-[18rem_minmax(0,1fr)] lg:py-24">
@@ -53,7 +56,12 @@ export default async function ExhibitPage({ params }: ExhibitPageProps) {
           </div>
         </div>
         <div className="mt-10">
-          <CodeArtifact label="Artifact snippet" code={exhibit.artifact} />
+          <CodeArtifact
+            label="Artifact snippet"
+            filename={exhibit.artifactFilename}
+            highlighted={highlighted}
+            showLineNumbers={exhibit.artifactLineNumbers}
+          />
         </div>
         {exhibit.warningLabel ? (
           <div className="legacy-warning mt-8 p-5">

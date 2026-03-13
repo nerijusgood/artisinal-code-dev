@@ -1,12 +1,18 @@
 import Link from "next/link";
+import { CodeArtifact } from "@/components/ui/code-artifact";
+import { highlightCode } from "@/lib/shiki";
 import type { ExhibitListItem } from "@/lib/museum";
-import { CodeArtifact } from "@/components/museum/code-artifact";
 
 type ExhibitCardProps = {
   exhibit: ExhibitListItem;
 };
 
-export function ExhibitCard({ exhibit }: ExhibitCardProps) {
+export async function ExhibitCard({ exhibit }: ExhibitCardProps) {
+  const highlighted = await highlightCode(
+    exhibit.artifact,
+    exhibit.artifactLanguage,
+  );
+
   return (
     <article className="museum-panel group p-6 transition-transform duration-300 hover:-translate-y-1">
       <div className="flex items-start justify-between gap-4">
@@ -23,7 +29,12 @@ export function ExhibitCard({ exhibit }: ExhibitCardProps) {
       <p className="mt-4 text-muted">{exhibit.description}</p>
       <p className="mt-3 text-sm text-muted">{exhibit.curatorNote}</p>
       <div className="mt-5">
-        <CodeArtifact label="Artifact snippet" code={exhibit.artifact} />
+        <CodeArtifact
+          label="Artifact snippet"
+          filename={exhibit.artifactFilename}
+          highlighted={highlighted}
+          showLineNumbers={exhibit.artifactLineNumbers}
+        />
       </div>
       <div className="mt-6 flex items-center justify-between gap-4">
         <div className="flex flex-wrap gap-2">

@@ -15,6 +15,9 @@ export type ExhibitFrontmatter = {
   description: string;
   tags: string[];
   artifact: string;
+  artifactLanguage: string;
+  artifactFilename?: string;
+  artifactLineNumbers?: boolean;
   status: string;
   curatorNote: string;
   originStory: string;

@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { CodeArtifact } from "@/components/museum/code-artifact";
 import { PageHero } from "@/components/page-hero";
+import { CodeArtifact } from "@/components/ui/code-artifact";
 import { Container } from "@/components/ui/container";
 import { getExhibits } from "@/lib/museum";
+import { highlightCode } from "@/lib/shiki";
 
 const museumLinks = [
   {
@@ -34,6 +35,12 @@ const museumLinks = [
 export default async function MuseumPage() {
   const exhibits = await getExhibits();
   const protectedLegacy = exhibits.filter((item) => item.tags.includes("legacy")).slice(0, 2);
+  const protectedLegacyArtifacts = await Promise.all(
+    protectedLegacy.map(async (exhibit) => ({
+      slug: exhibit.slug,
+      highlighted: await highlightCode(exhibit.artifact, exhibit.artifactLanguage),
+    })),
+  );
 
   return (
     <>
@@ -104,7 +111,15 @@ export default async function MuseumPage() {
                 <h3 className="mt-2 text-2xl">{exhibit.title}</h3>
                 <p className="mt-2 text-muted">{exhibit.warningLabel ?? exhibit.status}</p>
                 <div className="mt-4">
-                  <CodeArtifact label="Restricted snippet" code={exhibit.artifact} />
+                  <CodeArtifact
+                    label="Restricted snippet"
+                    filename={exhibit.artifactFilename}
+                    highlighted={
+                      protectedLegacyArtifacts.find((item) => item.slug === exhibit.slug)!
+                        .highlighted
+                    }
+                    showLineNumbers={exhibit.artifactLineNumbers}
+                  />
                 </div>
               </div>
             ))}
