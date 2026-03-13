@@ -3,6 +3,7 @@ import path from "node:path";
 import matter from "gray-matter";
 import { compileMDX } from "next-mdx-remote/rsc";
 import type { ReactElement } from "react";
+import { mdxComponents } from "@/components/museum/mdx-prose";
 
 const exhibitsDirectory = path.join(process.cwd(), "content/exhibits");
 
@@ -55,6 +56,7 @@ export async function getExhibitBySlug(
     const source = await readExhibitFile(slug);
     const { content, frontmatter } = await compileMDX<ExhibitFrontmatter>({
       source,
+      components: mdxComponents,
       options: {
         parseFrontmatter: true,
       },
@@ -69,4 +71,3 @@ export async function getExhibitBySlug(
     return null;
   }
 }
-

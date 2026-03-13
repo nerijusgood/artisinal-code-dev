@@ -4,7 +4,7 @@ function createHeading(tag: "h1" | "h2" | "h3") {
   return function Heading({
     className = "",
     ...props
-  }: ComponentPropsWithoutRef<typeof tag>) {
+  }: ComponentPropsWithoutRef<"h1"> | ComponentPropsWithoutRef<"h2"> | ComponentPropsWithoutRef<"h3">) {
     const sizes =
       tag === "h1"
         ? "text-4xl"
@@ -46,4 +46,3 @@ export const mdxComponents = {
     />
   ),
 };
-

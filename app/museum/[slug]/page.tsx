@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { mdxComponents } from "@/components/museum/mdx-prose";
 import { Container } from "@/components/ui/container";
 import { getExhibitBySlug, getExhibitSlugs } from "@/lib/museum";
 
@@ -54,16 +53,8 @@ export default async function ExhibitPage({ params }: ExhibitPageProps) {
           {exhibit.title}
         </h1>
         <p className="mt-5 max-w-3xl text-xl leading-8 text-muted">{exhibit.summary}</p>
-        <div className="mt-10">
-          {exhibit.content &&
-            (await import("next-mdx-remote/rsc")).MDXRemote({
-              source: "",
-              components: mdxComponents,
-            })}
-          <div className="[&_h1]:hidden">{exhibit.content}</div>
-        </div>
+        <div className="mt-10 [&_h1]:hidden">{exhibit.content}</div>
       </article>
     </Container>
   );
 }
-
