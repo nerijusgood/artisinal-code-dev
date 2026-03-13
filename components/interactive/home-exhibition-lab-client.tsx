@@ -141,237 +141,234 @@ export function HomeExhibitionLabClient({
           </div>
 
           <div className="space-y-6">
-            <div className="grid gap-6 xl:grid-cols-2">
-              <section className="museum-panel p-6">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="annotation">Commit Message Generator</p>
-                    <h3 className="mt-3 text-3xl">Revision inscriptions</h3>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={addCommit}
-                    className="rounded-full border border-border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.28em] text-foreground"
-                  >
-                    Generate commit
-                  </button>
+            <section className="museum-panel p-6">
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <p className="annotation">Commit Message Generator</p>
+                  <h3 className="mt-3 text-3xl">Revision inscriptions</h3>
                 </div>
-                <div className="mt-6">
-                  <CommitHistoryList
-                    title="Generated commit trail"
-                    items={commits.map((entry) => ({
-                      ...entry,
-                      note: developerView
-                        ? `${entry.note ?? ""} Internal note: confidence was overstated.`
-                        : entry.note,
-                    }))}
-                  />
-                </div>
-              </section>
+                <button
+                  type="button"
+                  onClick={addCommit}
+                  className="rounded-full border border-border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.28em] text-foreground"
+                >
+                  Generate commit
+                </button>
+              </div>
+              <div className="mt-6">
+                <CommitHistoryList
+                  title="Generated commit trail"
+                  items={commits.map((entry) => ({
+                    ...entry,
+                    note: developerView
+                      ? `${entry.note ?? ""} Internal note: confidence was overstated.`
+                      : entry.note,
+                  }))}
+                />
+              </div>
+            </section>
 
-              <section className="museum-panel p-6">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="annotation">Overengineering Visualizer</p>
-                    <h3 className="mt-3 text-3xl">Button abstraction tree</h3>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setVisibleLayers((current) =>
-                        current < architectureLayers.length ? current + 1 : current,
-                      )
-                    }
-                    disabled={visibleLayers >= architectureLayers.length}
-                    className="rounded-full border border-border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.28em] text-foreground disabled:cursor-not-allowed disabled:opacity-50"
+            <section className="museum-panel p-6">
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <p className="annotation">Overengineering Visualizer</p>
+                  <h3 className="mt-3 text-3xl">Button abstraction tree</h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setVisibleLayers((current) =>
+                      current < architectureLayers.length ? current + 1 : current,
+                    )
+                  }
+                  disabled={visibleLayers >= architectureLayers.length}
+                  className="rounded-full border border-border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.28em] text-foreground disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  Add layer
+                </button>
+              </div>
+              <p className="mt-4 max-w-3xl text-muted">
+                A single interface action accumulates wrappers, providers, and compatibility shells until the original button survives mostly as a legal concept.
+              </p>
+              <div className="mt-6 space-y-3">
+                {architectureLayers.slice(0, visibleLayers).map((layer, index) => (
+                  <div
+                    key={layer}
+                    className="rounded-[1.25rem] border border-border bg-background/70 p-4 transition-all"
+                    style={{ marginLeft: `${index * 16}px` }}
                   >
-                    Add layer
-                  </button>
-                </div>
-                <div className="mt-6 space-y-3">
-                  {architectureLayers.slice(0, visibleLayers).map((layer, index) => (
-                    <div
-                      key={layer}
-                      className="rounded-[1.25rem] border border-border bg-background/70 p-4 transition-all"
-                      style={{ marginLeft: `${index * 16}px` }}
-                    >
-                      <p className="annotation">Layer {index + 1}</p>
-                      <p className="mt-2 text-lg">{layer}</p>
-                      {developerView && index === visibleLayers - 1 ? (
-                        <p className="mt-2 text-sm text-muted">
-                          added to support a secondary quiet destructive hover state
-                        </p>
-                      ) : null}
-                    </div>
-                  ))}
-                </div>
-              </section>
-            </div>
-
-            <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_24rem]">
-              <section className="museum-panel p-6">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="annotation">Spaghetti Code Specimen Viewer</p>
-                    <h3 className="mt-3 text-3xl">Taxonomy drawer</h3>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {specimens.map((specimen, index) => (
-                      <button
-                        key={specimen.title}
-                        type="button"
-                        onClick={() => setSelectedSpecimen(index)}
-                        className={`rounded-full border px-3 py-2 font-mono text-[11px] uppercase tracking-[0.28em] ${
-                          selectedSpecimen === index
-                            ? "border-foreground bg-foreground text-background"
-                            : "border-border text-muted"
-                        }`}
-                      >
-                        Specimen {index + 1}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="mt-6 grid gap-5 lg:grid-cols-[18rem_minmax(0,1fr)]">
-                  <div className="tooling-panel p-5">
-                    <p className="annotation">Taxonomy label</p>
-                    <p className="mt-3 text-2xl">{currentSpecimen.taxonomy}</p>
-                    <p className="mt-4 text-sm text-muted">
-                      {currentSpecimen.curatorNote}
-                    </p>
-                    {developerView ? (
-                      <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.28em] text-muted">
-                        probable origin: helper added to avoid touching existing helper
+                    <p className="annotation">Layer {index + 1}</p>
+                    <p className="mt-2 text-lg">{layer}</p>
+                    {developerView && index === visibleLayers - 1 ? (
+                      <p className="mt-2 text-sm text-muted">
+                        added to support a secondary quiet destructive hover state
                       </p>
                     ) : null}
                   </div>
-                  <CodeArtifact
-                    label={currentSpecimen.title}
-                    filename={currentSpecimen.filename}
-                    highlighted={currentSpecimen.highlighted}
-                    showLineNumbers
-                  />
-                </div>
-              </section>
+                ))}
+              </div>
+            </section>
 
-              <section className="museum-panel p-6">
-                <p className="annotation">Protected Legacy Zone</p>
-                <h3 className="mt-3 text-3xl">Restricted access</h3>
-                {legacyUnlocked ? (
-                  <div className="legacy-warning mt-5 p-5">
-                    <p className="annotation">Area opened with reluctance</p>
-                    <ul className="mt-4 space-y-3 text-muted">
-                      {legacyWarnings.map((warning) => (
-                        <li key={warning}>{warning}</li>
-                      ))}
-                    </ul>
-                    <div className="mt-5">
-                      <CodeArtifact
-                        label="Restricted system fragment"
-                        filename="legacy/compatibility.ts"
-                        highlighted={legacyHighlighted}
-                        showLineNumbers
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  <div className="legacy-warning mt-5 p-5">
-                    <p className="text-muted">
-                      Protected area. No surviving documentation. Unknown dependencies.
-                    </p>
+            <section className="museum-panel p-6">
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <p className="annotation">Spaghetti Code Specimen Viewer</p>
+                  <h3 className="mt-3 text-3xl">Taxonomy drawer</h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {specimens.map((specimen, index) => (
                     <button
+                      key={specimen.title}
                       type="button"
-                      onClick={() => setLegacyUnlocked(true)}
-                      className="mt-4 rounded-full border border-border-strong bg-surface-strong px-4 py-2 font-mono text-[11px] uppercase tracking-[0.28em] text-foreground"
-                    >
-                      Acknowledge risk
-                    </button>
-                  </div>
-                )}
-              </section>
-            </div>
-
-            <div className="grid gap-6 xl:grid-cols-2">
-              <section className="museum-panel p-6">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="annotation">Client Scope Creep Simulator</p>
-                    <h3 className="mt-3 text-3xl">Complexity expansion engine</h3>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setScopeIndex((current) =>
-                        current < clientFeedback.length - 1 ? current + 1 : current,
-                      )
-                    }
-                    disabled={scopeIndex >= clientFeedback.length - 1}
-                    className="rounded-full border border-border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.28em] text-foreground disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    Generate request
-                  </button>
-                </div>
-                <div className="mt-6 space-y-3">
-                  {clientFeedback.slice(0, scopeIndex + 1).map((feedback, index) => (
-                    <div
-                      key={`${feedback}-${index}`}
-                      className={`grid gap-2 p-4 md:grid-cols-[12rem_minmax(0,1fr)] ${
-                        index === scopeIndex ? "legacy-warning" : "tooling-panel"
+                      onClick={() => setSelectedSpecimen(index)}
+                      className={`rounded-full border px-3 py-2 font-mono text-[11px] uppercase tracking-[0.28em] ${
+                        selectedSpecimen === index
+                          ? "border-foreground bg-foreground text-background"
+                          : "border-border text-muted"
                       }`}
                     >
-                      <p className="annotation">Client note {index + 1}</p>
-                      <p className="text-lg">{feedback}</p>
-                    </div>
+                      Specimen {index + 1}
+                    </button>
                   ))}
                 </div>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  <span className="status-chip">Complexity {scopeComplexity}x</span>
-                  <span className="status-chip">Budget unchanged</span>
-                  <span className="status-chip">Timeline optimistic</span>
-                </div>
+              </div>
+              <div className="tooling-panel mt-6 p-5">
+                <p className="annotation">Taxonomy label</p>
+                <p className="mt-3 text-2xl">{currentSpecimen.taxonomy}</p>
+                <p className="mt-4 text-sm text-muted">
+                  {currentSpecimen.curatorNote}
+                </p>
                 {developerView ? (
-                  <p className="mt-4 text-sm text-muted">
-                    Internal annotation: architecture now includes auth, billing,
-                    prompt orchestration, admin, and a future migration we can already
-                    sense.
+                  <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.28em] text-muted">
+                    probable origin: helper added to avoid touching existing helper
                   </p>
                 ) : null}
-              </section>
+              </div>
+              <div className="mt-6">
+                <CodeArtifact
+                  label={currentSpecimen.title}
+                  filename={currentSpecimen.filename}
+                  highlighted={currentSpecimen.highlighted}
+                  showLineNumbers
+                />
+              </div>
+            </section>
 
-              <section className="museum-panel p-6">
-                <p className="annotation">Developer View Toggle</p>
-                <h3 className="mt-3 text-3xl">Implementation scars</h3>
-                <div className="mt-6 space-y-3">
-                  <div className="tooling-panel p-4">
-                    <p className="annotation">Public label</p>
-                    <p className="mt-2 text-lg">Stable museum interface</p>
-                    {developerView ? (
-                      <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.28em] text-muted">
-                        TODO: clean this up before someone asks how it works
-                      </p>
-                    ) : null}
-                  </div>
-                  <div className="tooling-panel p-4">
-                    <p className="annotation">Architecture note</p>
-                    <p className="mt-2 text-lg">Curated exhibit presentation</p>
-                    {developerView ? (
-                      <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.28em] text-muted">
-                        introduced during emergency refactor / retained due to regression risk
-                      </p>
-                    ) : null}
-                  </div>
-                  <div className="tooling-panel p-4">
-                    <p className="annotation">Operational record</p>
-                    <p className="mt-2 text-lg">Human authorship verified</p>
-                    {developerView ? (
-                      <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.28em] text-muted">
-                        commit note: naming remains under quiet dispute
-                      </p>
-                    ) : null}
+            <section className="museum-panel p-6">
+              <p className="annotation">Protected Legacy Zone</p>
+              <h3 className="mt-3 text-3xl">Restricted access</h3>
+              {legacyUnlocked ? (
+                <div className="legacy-warning mt-5 p-5">
+                  <p className="annotation">Area opened with reluctance</p>
+                  <ul className="mt-4 space-y-3 text-muted">
+                    {legacyWarnings.map((warning) => (
+                      <li key={warning}>{warning}</li>
+                    ))}
+                  </ul>
+                  <div className="mt-5">
+                    <CodeArtifact
+                      label="Restricted system fragment"
+                      filename="legacy/compatibility.ts"
+                      highlighted={legacyHighlighted}
+                      showLineNumbers
+                    />
                   </div>
                 </div>
-              </section>
-            </div>
+              ) : (
+                <div className="legacy-warning mt-5 p-5">
+                  <p className="text-muted">
+                    Protected area. No surviving documentation. Unknown dependencies.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setLegacyUnlocked(true)}
+                    className="mt-4 rounded-full border border-border-strong bg-surface-strong px-4 py-2 font-mono text-[11px] uppercase tracking-[0.28em] text-foreground"
+                  >
+                    Acknowledge risk
+                  </button>
+                </div>
+              )}
+            </section>
+
+            <section className="museum-panel p-6">
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <p className="annotation">Client Scope Creep Simulator</p>
+                  <h3 className="mt-3 text-3xl">Complexity expansion engine</h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setScopeIndex((current) =>
+                      current < clientFeedback.length - 1 ? current + 1 : current,
+                    )
+                  }
+                  disabled={scopeIndex >= clientFeedback.length - 1}
+                  className="rounded-full border border-border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.28em] text-foreground disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  Generate request
+                </button>
+              </div>
+              <div className="mt-6 space-y-3">
+                {clientFeedback.slice(0, scopeIndex + 1).map((feedback, index) => (
+                  <div
+                    key={`${feedback}-${index}`}
+                    className={`grid gap-2 p-4 ${
+                      index === scopeIndex ? "legacy-warning" : "tooling-panel"
+                    }`}
+                  >
+                    <p className="annotation">Client note {index + 1}</p>
+                    <p className="text-lg">{feedback}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-5 flex flex-wrap gap-2">
+                <span className="status-chip">Complexity {scopeComplexity}x</span>
+                <span className="status-chip">Budget unchanged</span>
+                <span className="status-chip">Timeline optimistic</span>
+              </div>
+              {developerView ? (
+                <p className="mt-4 text-sm text-muted">
+                  Internal annotation: architecture now includes auth, billing,
+                  prompt orchestration, admin, and a future migration we can already
+                  sense.
+                </p>
+              ) : null}
+            </section>
+
+            <section className="museum-panel p-6">
+              <p className="annotation">Developer View Toggle</p>
+              <h3 className="mt-3 text-3xl">Implementation scars</h3>
+              <div className="mt-6 space-y-3">
+                <div className="tooling-panel p-4">
+                  <p className="annotation">Public label</p>
+                  <p className="mt-2 text-lg">Stable museum interface</p>
+                  {developerView ? (
+                    <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.28em] text-muted">
+                      TODO: clean this up before someone asks how it works
+                    </p>
+                  ) : null}
+                </div>
+                <div className="tooling-panel p-4">
+                  <p className="annotation">Architecture note</p>
+                  <p className="mt-2 text-lg">Curated exhibit presentation</p>
+                  {developerView ? (
+                    <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.28em] text-muted">
+                      introduced during emergency refactor / retained due to regression risk
+                    </p>
+                  ) : null}
+                </div>
+                <div className="tooling-panel p-4">
+                  <p className="annotation">Operational record</p>
+                  <p className="mt-2 text-lg">Human authorship verified</p>
+                  {developerView ? (
+                    <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.28em] text-muted">
+                      commit note: naming remains under quiet dispute
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </div>

@@ -155,12 +155,14 @@ export default async function HomePage() {
             <p className="annotation">Museum collection</p>
             <h2 className="mt-4 text-4xl leading-tight">Highlights from the archive</h2>
           </div>
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-5 lg:grid-cols-2">
             {exhibits.slice(0, 3).map((exhibit) => (
               <Link
                 key={exhibit.slug}
                 href={`/museum/exhibits/${exhibit.slug}`}
-                className="museum-panel group p-6"
+                className={`museum-panel group p-6 ${
+                  exhibit.slug === exhibits[0]?.slug ? "lg:col-span-2" : ""
+                }`}
               >
                 <p className="annotation">
                   {exhibit.year} / {exhibit.developer}
