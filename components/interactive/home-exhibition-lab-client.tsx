@@ -241,6 +241,16 @@ export function HomeExhibitionLabClient({
                       <p className="mt-3 text-sm text-muted">
                         {currentSpecimen.taxonomy}
                       </p>
+                      <p className="mt-4 font-mono text-xs leading-6 text-muted">
+                        {currentSpecimen.filename}
+                      </p>
+                      <div className="mt-4 rounded-[1rem] border border-border bg-background/60 p-4">
+                        <p className="annotation">Preview fragment</p>
+                        <p className="mt-3 font-mono text-sm text-foreground/80">
+                          One preserved helper, one unclear intention, one unusually
+                          durable abstraction.
+                        </p>
+                      </div>
                     </div>
                   </section>
 
@@ -266,6 +276,9 @@ export function HomeExhibitionLabClient({
                       <p className="mt-3 text-lg">
                         Functioning since 2014. Unknown dependencies remain active.
                       </p>
+                      <p className="mt-4 font-mono text-xs uppercase tracking-[0.28em] text-muted">
+                        restricted path: legacy/compatibility.ts
+                      </p>
                     </div>
                   </section>
 
@@ -287,10 +300,18 @@ export function HomeExhibitionLabClient({
                       Observe how a simple request acquires additional systems while
                       retaining the original budgetary optimism.
                     </p>
-                    <div className="mt-6 flex flex-wrap gap-2">
-                      <span className="status-chip">Complexity {scopeComplexity}x</span>
-                      <span className="status-chip">Budget unchanged</span>
-                      <span className="status-chip">Timeline optimistic</span>
+                    <div className="tooling-panel mt-6 p-5">
+                      <p className="annotation">Current request state</p>
+                      <p className="mt-3 font-mono text-sm text-foreground">
+                        &quot;{clientFeedback[scopeIndex]}&quot;
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        <span className="status-chip">Complexity {scopeComplexity}x</span>
+                        <span className="status-chip">Budget unchanged</span>
+                      </div>
+                      <p className="mt-4 text-sm text-muted">
+                        Escalation summary: simple request now implies a platform.
+                      </p>
                     </div>
                   </section>
 
@@ -317,6 +338,12 @@ export function HomeExhibitionLabClient({
                       <p className="mt-3 text-lg">
                         {developerView ? "Annotations visible" : "Public display only"}
                       </p>
+                      <div className="mt-4 rounded-[1rem] border border-border bg-background/60 p-4">
+                        <p className="annotation">Preview annotation</p>
+                        <p className="mt-3 font-mono text-xs uppercase tracking-[0.28em] text-muted">
+                          introduced during emergency refactor
+                        </p>
+                      </div>
                     </div>
                   </section>
                 </div>
