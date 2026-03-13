@@ -1,0 +1,17 @@
+:root {
+  --background: #f4f0e8;
+  --background-muted: #ece5d9;
+  --surface: rgba(255, 252, 246, 0.72);
+  --surface-strong: rgba(255, 250, 243, 0.9);
+  --border: rgba(54, 43, 28, 0.16);
+  --border-strong: rgba(54, 43, 28, 0.34);
+  --foreground: #241b12;
+  --muted: #655847;
+  --accent: #8a4b2a;
+  --accent-soft: rgba(138, 75, 42, 0.12);
+  --shadow: 0 24px 80px rgba(36, 27, 18, 0.08);
+  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --font-body: "Spectral", "Baskerville", "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", monospace;
+}
+
