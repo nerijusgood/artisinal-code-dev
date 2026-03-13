@@ -61,5 +61,47 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
 
+  .grid-overlay {
+    background-image:
+      linear-gradient(rgba(36, 27, 18, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(36, 27, 18, 0.045) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .museum-panel {
+    @apply rounded-[2rem] border border-border bg-surface shadow-[var(--shadow)];
+  }
+
+  .tooling-panel {
+    background: var(--surface-strong);
+    box-shadow: var(--shadow);
+    @apply rounded-[1.5rem] border border-border-strong;
+  }
+
+  .code-panel {
+    background: #1f1712;
+    color: #f2e7d6;
+    @apply rounded-[1.5rem] border border-[#4a3628];
+  }
+
+  .annotation {
+    @apply font-mono text-[10px] uppercase tracking-[0.3em] text-muted;
+  }
+
+  .status-chip {
+    @apply inline-flex items-center rounded-full border border-border px-3 py-1 font-mono text-[11px] uppercase tracking-[0.28em] text-muted;
+  }
+
+  .legacy-warning {
+    background: rgba(154, 106, 47, 0.08);
+    border-color: rgba(154, 106, 47, 0.34);
+    @apply rounded-[1.5rem] border;
+  }
+
+  .diff-add {
+    background: rgba(95, 122, 97, 0.12);
+    border-color: rgba(95, 122, 97, 0.3);
+    @apply border-l-2;
+  }
+}

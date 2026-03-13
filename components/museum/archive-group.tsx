@@ -8,7 +8,7 @@ type ArchiveGroupProps = {
 
 export function ArchiveGroup({ title, items }: ArchiveGroupProps) {
   return (
-    <section className="rounded-[2rem] border border-border bg-surface p-6 shadow-[var(--shadow)]">
+    <section className="museum-panel p-6">
       <div className="flex items-baseline justify-between gap-4">
         <h2 className="text-2xl">{title}</h2>
         <p className="font-mono text-xs uppercase tracking-[0.35em] text-muted">
@@ -23,14 +23,14 @@ export function ArchiveGroup({ title, items }: ArchiveGroupProps) {
             className="block rounded-[1.5rem] border border-border bg-background/70 p-4"
           >
             <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
-              {item.year} / {item.developer}
+              {item.year} / {item.classification}
             </p>
             <h3 className="mt-2 text-xl">{item.title}</h3>
             <p className="mt-2 text-sm text-muted">{item.description}</p>
+            <p className="mt-2 text-sm text-muted">{item.status}</p>
           </Link>
         ))}
       </div>
     </section>
   );
 }
-

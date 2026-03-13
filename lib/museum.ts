@@ -11,10 +11,14 @@ export type ExhibitFrontmatter = {
   title: string;
   year: string;
   developer: string;
+  classification: string;
   description: string;
   tags: string[];
   artifact: string;
-  status?: string;
+  status: string;
+  curatorNote: string;
+  originStory: string;
+  warningLabel?: string;
 };
 
 export type ExhibitListItem = ExhibitFrontmatter & {
@@ -55,9 +59,11 @@ export async function getArchiveGroups() {
   const exhibits = await getExhibits();
   const byYear = new Map<string, ExhibitListItem[]>();
   const byTag = new Map<string, ExhibitListItem[]>();
+  const byStatus = new Map<string, ExhibitListItem[]>();
 
   for (const exhibit of exhibits) {
     byYear.set(exhibit.year, [...(byYear.get(exhibit.year) ?? []), exhibit]);
+    byStatus.set(exhibit.status, [...(byStatus.get(exhibit.status) ?? []), exhibit]);
 
     for (const tag of exhibit.tags) {
       byTag.set(tag, [...(byTag.get(tag) ?? []), exhibit]);
@@ -68,6 +74,7 @@ export async function getArchiveGroups() {
     exhibits,
     years: [...byYear.entries()].sort((a, b) => b[0].localeCompare(a[0])),
     tags: [...byTag.entries()].sort((a, b) => a[0].localeCompare(b[0])),
+    statuses: [...byStatus.entries()].sort((a, b) => a[0].localeCompare(b[0])),
   };
 }
 

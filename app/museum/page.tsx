@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CodeArtifact } from "@/components/museum/code-artifact";
 import { PageHero } from "@/components/page-hero";
 import { Container } from "@/components/ui/container";
 import { getExhibits } from "@/lib/museum";
@@ -32,6 +33,7 @@ const museumLinks = [
 
 export default async function MuseumPage() {
   const exhibits = await getExhibits();
+  const protectedLegacy = exhibits.filter((item) => item.tags.includes("legacy")).slice(0, 2);
 
   return (
     <>
@@ -46,7 +48,7 @@ export default async function MuseumPage() {
           <Link
             key={link.href}
             href={link.href}
-            className="rounded-[2rem] border border-border bg-surface p-6 shadow-[var(--shadow)]"
+            className="museum-panel p-6"
           >
             <p className="font-mono text-xs uppercase tracking-[0.35em] text-muted">
               Museum Route
@@ -57,23 +59,54 @@ export default async function MuseumPage() {
         ))}
       </Container>
       <Container className="border-t border-border py-10">
-        <div className="grid gap-5 lg:grid-cols-[16rem_minmax(0,1fr)]">
-          <p className="font-mono text-xs uppercase tracking-[0.35em] text-muted">
-            Recent Acquisitions
-          </p>
-          <div className="grid gap-4">
+        <div className="grid gap-8 lg:grid-cols-[16rem_minmax(0,1fr)]">
+          <div className="space-y-6">
+            <p className="font-mono text-xs uppercase tracking-[0.35em] text-muted">
+              Permanent Collection
+            </p>
+            <p className="text-sm text-muted">
+              A rare surviving fragment from the pre-prompt era may still bear stress,
+              uncertainty, and comments addressed to no one in particular.
+            </p>
+          </div>
+          <div className="grid gap-4 xl:grid-cols-3">
             {exhibits.slice(0, 3).map((exhibit) => (
               <Link
                 key={exhibit.slug}
                 href={`/museum/exhibits/${exhibit.slug}`}
-                className="rounded-[1.75rem] border border-border bg-surface p-5"
+                className="museum-panel p-5"
               >
                 <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
                   {exhibit.year} / {exhibit.developer}
                 </p>
                 <h3 className="mt-2 text-2xl">{exhibit.title}</h3>
                 <p className="mt-2 text-muted">{exhibit.description}</p>
+                <p className="mt-3 text-sm text-muted">{exhibit.curatorNote}</p>
               </Link>
+            ))}
+          </div>
+        </div>
+      </Container>
+
+      <Container className="border-t border-border py-10">
+        <div className="grid gap-8 lg:grid-cols-[16rem_minmax(0,1fr)]">
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.35em] text-muted">
+              Protected Legacy Systems Wing
+            </p>
+          </div>
+          <div className="grid gap-4 lg:grid-cols-2">
+            {protectedLegacy.map((exhibit) => (
+              <div key={exhibit.slug} className="legacy-warning p-5">
+                <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
+                  Preservation Notice
+                </p>
+                <h3 className="mt-2 text-2xl">{exhibit.title}</h3>
+                <p className="mt-2 text-muted">{exhibit.warningLabel ?? exhibit.status}</p>
+                <div className="mt-4">
+                  <CodeArtifact label="Restricted snippet" code={exhibit.artifact} />
+                </div>
+              </div>
             ))}
           </div>
         </div>

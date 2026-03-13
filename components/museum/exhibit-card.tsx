@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ExhibitListItem } from "@/lib/museum";
+import { CodeArtifact } from "@/components/museum/code-artifact";
 
 type ExhibitCardProps = {
   exhibit: ExhibitListItem;
@@ -7,11 +8,11 @@ type ExhibitCardProps = {
 
 export function ExhibitCard({ exhibit }: ExhibitCardProps) {
   return (
-    <article className="group rounded-[2rem] border border-border bg-surface p-6 shadow-[var(--shadow)] transition-transform duration-300 hover:-translate-y-1">
+    <article className="museum-panel group p-6 transition-transform duration-300 hover:-translate-y-1">
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="font-mono text-xs uppercase tracking-[0.35em] text-muted">
-            {exhibit.developer}
+            {exhibit.classification}
           </p>
           <h2 className="mt-4 text-2xl leading-tight">{exhibit.title}</h2>
         </div>
@@ -20,6 +21,10 @@ export function ExhibitCard({ exhibit }: ExhibitCardProps) {
         </p>
       </div>
       <p className="mt-4 text-muted">{exhibit.description}</p>
+      <p className="mt-3 text-sm text-muted">{exhibit.curatorNote}</p>
+      <div className="mt-5">
+        <CodeArtifact label="Artifact snippet" code={exhibit.artifact} />
+      </div>
       <div className="mt-6 flex items-center justify-between gap-4">
         <div className="flex flex-wrap gap-2">
           {exhibit.tags.slice(0, 2).map((tag) => (

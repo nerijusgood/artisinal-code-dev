@@ -13,6 +13,12 @@ export function Placard({ exhibit }: PlacardProps) {
       <dl className="mt-5 space-y-5">
         <div>
           <dt className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
+            Classification
+          </dt>
+          <dd className="mt-2 text-lg">{exhibit.classification}</dd>
+        </div>
+        <div>
+          <dt className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
             Developer
           </dt>
           <dd className="mt-2 text-lg">{exhibit.developer}</dd>
@@ -27,7 +33,7 @@ export function Placard({ exhibit }: PlacardProps) {
           <dt className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
             Status
           </dt>
-          <dd className="mt-2 text-lg">{exhibit.status ?? "In active preservation"}</dd>
+          <dd className="mt-2 text-lg">{exhibit.status}</dd>
         </div>
         <div>
           <dt className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
@@ -44,8 +50,15 @@ export function Placard({ exhibit }: PlacardProps) {
             ))}
           </dd>
         </div>
+        {exhibit.warningLabel ? (
+          <div className="legacy-warning p-4">
+            <dt className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
+              Warning Label
+            </dt>
+            <dd className="mt-2 text-sm leading-6">{exhibit.warningLabel}</dd>
+          </div>
+        ) : null}
       </dl>
     </div>
   );
 }
-

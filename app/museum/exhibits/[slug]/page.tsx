@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { CodeArtifact } from "@/components/museum/code-artifact";
 import { Placard } from "@/components/museum/placard";
 import { Container } from "@/components/ui/container";
 import { getExhibitBySlug, getExhibitSlugs } from "@/lib/museum";
@@ -37,17 +38,33 @@ export default async function ExhibitPage({ params }: ExhibitPageProps) {
         <p className="mt-5 max-w-3xl text-xl leading-8 text-muted">
           {exhibit.description}
         </p>
-        <div className="mt-10 rounded-[1.75rem] border border-border bg-[#201711] px-5 py-5">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#d8c5aa]">
-            Artifact Snippet
-          </p>
-          <pre className="mt-4 overflow-x-auto font-mono text-sm leading-7 text-[#f5ecdc]">
-            <code>{exhibit.artifact}</code>
-          </pre>
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
+          <div className="museum-panel p-5">
+            <p className="font-mono text-xs uppercase tracking-[0.35em] text-muted">
+              Curator Note
+            </p>
+            <p className="mt-3 text-muted">{exhibit.curatorNote}</p>
+          </div>
+          <div className="museum-panel p-5">
+            <p className="font-mono text-xs uppercase tracking-[0.35em] text-muted">
+              Origin Story
+            </p>
+            <p className="mt-3 text-muted">{exhibit.originStory}</p>
+          </div>
         </div>
+        <div className="mt-10">
+          <CodeArtifact label="Artifact snippet" code={exhibit.artifact} />
+        </div>
+        {exhibit.warningLabel ? (
+          <div className="legacy-warning mt-8 p-5">
+            <p className="font-mono text-xs uppercase tracking-[0.35em] text-muted">
+              Warning Label
+            </p>
+            <p className="mt-3 text-muted">{exhibit.warningLabel}</p>
+          </div>
+        ) : null}
         <div className="mt-10 [&_h1]:hidden">{exhibit.content}</div>
       </article>
     </Container>
   );
 }
-

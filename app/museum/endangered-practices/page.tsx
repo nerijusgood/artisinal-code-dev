@@ -1,5 +1,5 @@
 import { PageHero } from "@/components/page-hero";
-import { PageSection } from "@/components/page-section";
+import { Container } from "@/components/ui/container";
 
 const practices = [
   {
@@ -29,27 +29,36 @@ export default function EndangeredPracticesPage() {
         description="This gallery documents behaviors once learned through repetition, incident response, and informal apprenticeship."
         aside="Preservation efforts focus on techniques that require patience, judgment, and the capacity to doubt one's first abstraction."
       />
-      <PageSection title="Field Guide">
+      <Container className="grid gap-8 pb-8 lg:grid-cols-[16rem_minmax(0,1fr)]">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-[0.35em] text-muted">
+            Endangered Human Practices
+          </p>
+        </div>
         <div className="grid gap-5">
           {practices.map((practice) => (
             <article
               key={practice.title}
-              className="rounded-[1.75rem] border border-border bg-surface p-6"
+              className="museum-panel p-6"
             >
               <h2 className="text-2xl">{practice.title}</h2>
               <p className="mt-3 text-muted">{practice.body}</p>
             </article>
           ))}
         </div>
-      </PageSection>
-      <PageSection title="Preservation Status">
-        <p>
-          The museum considers these practices critically endangered but still
-          recoverable, provided engineers are allowed to struggle productively for at
-          least a few minutes before a machine offers five identical solutions.
-        </p>
-      </PageSection>
+      </Container>
+      <Container className="pb-16">
+        <div className="legacy-warning p-6">
+          <p className="font-mono text-xs uppercase tracking-[0.35em] text-muted">
+            Preservation Status
+          </p>
+          <p className="mt-3 text-muted">
+            The museum considers these practices critically endangered but still
+            recoverable, provided engineers are allowed to struggle productively for
+            at least a few minutes before a machine offers five identical solutions.
+          </p>
+        </div>
+      </Container>
     </>
   );
 }
-
