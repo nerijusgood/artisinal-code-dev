@@ -1,10 +1,17 @@
 import type { HighlightedCode } from "@/lib/shiki";
 
+type CodeArtifactMetadataItem = {
+  label: string;
+  value: string;
+};
+
 type CodeArtifactProps = {
   highlighted: HighlightedCode;
   filename?: string;
   label?: string;
   showLineNumbers?: boolean;
+  renderMode?: "code" | "diff";
+  metadata?: CodeArtifactMetadataItem[];
   className?: string;
 };
 
@@ -25,6 +32,8 @@ export function CodeArtifact({
   filename,
   label = "Recovered code fragment",
   showLineNumbers = false,
+  renderMode = "code",
+  metadata = [],
   className = "",
 }: CodeArtifactProps) {
   return (
@@ -49,12 +58,32 @@ export function CodeArtifact({
           ) : null}
         </div>
       </div>
+      {metadata.length > 0 ? (
+        <div className="mt-4 grid gap-3 border-t border-[#4a3628] pt-4 sm:grid-cols-2 xl:grid-cols-3">
+          {metadata.map((item) => (
+            <div key={`${item.label}-${item.value}`} className="min-w-0">
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#a78f77]">
+                {item.label}
+              </p>
+              <p className="mt-1 truncate text-sm text-[#f5ecdc]">{item.value}</p>
+            </div>
+          ))}
+        </div>
+      ) : null}
       <div className="mt-4 overflow-x-auto">
         <div className="min-w-max font-mono text-sm leading-7 text-[#f5ecdc]">
           {highlighted.lines.map((line) => (
             <div
               key={line.number}
-              className={`grid ${showLineNumbers ? "grid-cols-[3rem_minmax(0,1fr)] gap-4" : "grid-cols-1"} whitespace-pre`}
+              className={`grid ${showLineNumbers ? "grid-cols-[3rem_minmax(0,1fr)] gap-4" : "grid-cols-1"} whitespace-pre ${
+                renderMode === "diff"
+                  ? line.raw.startsWith("+")
+                    ? "artifact-diff-line artifact-diff-line--added"
+                    : line.raw.startsWith("-")
+                      ? "artifact-diff-line artifact-diff-line--removed"
+                      : "artifact-diff-line artifact-diff-line--context"
+                  : ""
+              }`}
             >
               {showLineNumbers ? (
                 <span className="select-none text-right text-[#a78f77]">
@@ -85,4 +114,3 @@ export function CodeArtifact({
     </div>
   );
 }
-

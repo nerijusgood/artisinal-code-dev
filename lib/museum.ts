@@ -18,6 +18,7 @@ export type ExhibitFrontmatter = {
   artifactLanguage: string;
   artifactFilename?: string;
   artifactLineNumbers?: boolean;
+  artifactRenderMode?: "code" | "diff";
   status: string;
   curatorNote: string;
   originStory: string;
@@ -27,6 +28,16 @@ export type ExhibitFrontmatter = {
 export type ExhibitListItem = ExhibitFrontmatter & {
   slug: string;
 };
+
+export function getArtifactId(exhibit: Pick<ExhibitListItem, "year" | "slug">) {
+  const suffix = exhibit.slug
+    .split("-")
+    .slice(0, 2)
+    .map((segment) => segment.slice(0, 3).toUpperCase())
+    .join("-");
+
+  return `AC-${exhibit.year}-${suffix}`;
+}
 
 async function readExhibitFile(slug: string) {
   const filePath = path.join(exhibitsDirectory, `${slug}.mdx`);

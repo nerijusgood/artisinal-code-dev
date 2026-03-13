@@ -9,12 +9,14 @@ tags:
   - indexing
   - fundamentals
 artifact: |
-  for (let i = 0; i <= items.length; i++) {
-    process(items[i]);
-  }
+  - for (let i = 0; i <= items.length; i++) {
+  + for (let i = 0; i < items.length; i++) {
+     process(items[i]);
+   }
 artifactLanguage: "javascript"
 artifactFilename: "jobs/process-items.js"
 artifactLineNumbers: true
+artifactRenderMode: "diff"
 status: "Contained after incident"
 curatorNote: "The piece is prized for its clarity. Even experienced visitors feel a brief sympathetic embarrassment."
 originStory: "Recovered from a reporting job that failed only on month-end data volumes, thereby achieving ideal dramatic timing."

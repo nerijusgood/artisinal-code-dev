@@ -9,12 +9,13 @@ tags:
   - production
   - stability
 artifact: |
-  if (process.env.NODE_ENV === "production") {
-    return fallbackResponse;
-  }
+  + if (process.env.NODE_ENV === "production") {
+  +   return fallbackResponse;
+  + }
 artifactLanguage: "typescript"
 artifactFilename: "src/runtime/temporary-patch.ts"
 artifactLineNumbers: true
+artifactRenderMode: "diff"
 status: "Temporary since 2019"
 curatorNote: "Its endurance reflects both practical value and the administrative difficulty of revisiting something that still works."
 originStory: "Introduced during a service incident, then preserved by the recurring absence of a safer week in which to remove it."

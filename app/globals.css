@@ -104,4 +104,71 @@ body {
     border-color: rgba(95, 122, 97, 0.3);
     @apply border-l-2;
   }
+
+  .artifact-diff-line {
+    @apply rounded-sm px-2;
+  }
+
+  .artifact-diff-line--added {
+    background: rgba(95, 122, 97, 0.18);
+    box-shadow: inset 2px 0 0 rgba(95, 122, 97, 0.55);
+  }
+
+  .artifact-diff-line--removed {
+    background: rgba(138, 90, 82, 0.18);
+    box-shadow: inset 2px 0 0 rgba(138, 90, 82, 0.55);
+  }
+
+  .artifact-diff-line--context {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .commit-history {
+    overflow: hidden;
+  }
+
+  .commit-history__header {
+    @apply border-b border-border bg-background/70 px-5 py-4;
+  }
+
+  .commit-history__list {
+    @apply divide-y divide-border;
+  }
+
+  .commit-history__item {
+    @apply grid gap-4 px-5 py-4 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-center;
+  }
+
+  .commit-history__main {
+    @apply min-w-0;
+  }
+
+  .commit-history__message-row {
+    @apply flex flex-wrap items-center gap-3;
+  }
+
+  .commit-history__message {
+    @apply min-w-0 font-mono text-[0.98rem] text-foreground;
+  }
+
+  .commit-history__note {
+    @apply mt-2 text-sm text-muted;
+  }
+
+  .commit-history__meta {
+    @apply flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted lg:justify-end;
+  }
+
+  .commit-history__hash {
+    @apply font-mono text-xs uppercase tracking-[0.24em] text-accent;
+  }
+
+  .commit-history__author,
+  .commit-history__timestamp {
+    @apply text-sm text-muted;
+  }
+
+  .commit-history__label {
+    @apply inline-flex items-center rounded-full border border-border bg-background px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.24em] text-muted;
+  }
 }

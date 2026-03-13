@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { CodeArtifact } from "@/components/ui/code-artifact";
 import { Container } from "@/components/ui/container";
-import { getExhibits } from "@/lib/museum";
+import { getArtifactId, getExhibits } from "@/lib/museum";
 import { highlightCode } from "@/lib/shiki";
 
 const museumLinks = [
@@ -83,12 +83,24 @@ export default async function MuseumPage() {
                 href={`/museum/exhibits/${exhibit.slug}`}
                 className="museum-panel p-5"
               >
-                <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
-                  {exhibit.year} / {exhibit.developer}
-                </p>
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
+                    {getArtifactId(exhibit)}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="status-chip">{exhibit.artifactLanguage}</span>
+                    <span className="status-chip">{exhibit.status}</span>
+                  </div>
+                </div>
                 <h3 className="mt-2 text-2xl">{exhibit.title}</h3>
                 <p className="mt-2 text-muted">{exhibit.description}</p>
                 <p className="mt-3 text-sm text-muted">{exhibit.curatorNote}</p>
+                <div className="mt-4 grid gap-2 font-mono text-[11px] uppercase tracking-[0.24em] text-muted sm:grid-cols-2">
+                  <span>{exhibit.developer}</span>
+                  <span>{exhibit.classification}</span>
+                  <span>{exhibit.year}</span>
+                  <span>{exhibit.artifactFilename ?? "artifact path unrecorded"}</span>
+                </div>
               </Link>
             ))}
           </div>
@@ -119,6 +131,13 @@ export default async function MuseumPage() {
                         .highlighted
                     }
                     showLineNumbers={exhibit.artifactLineNumbers}
+                    renderMode={exhibit.artifactRenderMode}
+                    metadata={[
+                      { label: "Artifact ID", value: getArtifactId(exhibit) },
+                      { label: "Year", value: exhibit.year },
+                      { label: "Status", value: exhibit.status },
+                      { label: "Developer", value: exhibit.developer },
+                    ]}
                   />
                 </div>
               </div>

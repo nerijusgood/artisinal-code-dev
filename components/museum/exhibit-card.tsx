@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CodeArtifact } from "@/components/ui/code-artifact";
+import { getArtifactId } from "@/lib/museum";
 import { highlightCode } from "@/lib/shiki";
 import type { ExhibitListItem } from "@/lib/museum";
 
@@ -34,6 +35,11 @@ export async function ExhibitCard({ exhibit }: ExhibitCardProps) {
           filename={exhibit.artifactFilename}
           highlighted={highlighted}
           showLineNumbers={exhibit.artifactLineNumbers}
+          renderMode={exhibit.artifactRenderMode}
+          metadata={[
+            { label: "Artifact ID", value: getArtifactId(exhibit) },
+            { label: "Status", value: exhibit.status },
+          ]}
         />
       </div>
       <div className="mt-6 flex items-center justify-between gap-4">

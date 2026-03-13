@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import { CodeArtifact } from "@/components/ui/code-artifact";
+import {
+  CommitHistoryList,
+  type CommitHistoryItem,
+} from "@/components/ui/commit-history-list";
 import type { HighlightedCode } from "@/lib/shiki";
 
 const commitMessages = [
@@ -43,13 +47,6 @@ const legacyWarnings = [
   "Two teams believe they own this.",
 ];
 
-type CommitEntry = {
-  id: number;
-  hash: string;
-  message: string;
-  note: string;
-};
-
 type Specimen = {
   title: string;
   taxonomy: string;
@@ -73,17 +70,23 @@ export function HomeExhibitionLabClient({
 }: HomeExhibitionLabClientProps) {
   const [developerView, setDeveloperView] = useState(false);
   const [commitIndex, setCommitIndex] = useState(2);
-  const [commits, setCommits] = useState<CommitEntry[]>([
+  const [commits, setCommits] = useState<CommitHistoryItem[]>([
     {
       id: 0,
       hash: "9af31d2",
       message: "fix",
+      author: "museum staff",
+      timestamp: "2 hours ago",
+      label: "main",
       note: "Initial intervention. Confidence high, evidence limited.",
     },
     {
       id: 1,
       hash: "bd1e771",
       message: "fix actual issue",
+      author: "museum staff",
+      timestamp: "43 minutes ago",
+      label: "hotfix",
       note: "Revision produced after direct contact with production.",
     },
   ]);
@@ -101,6 +104,9 @@ export function HomeExhibitionLabClient({
         id: current.length,
         hash: makeHash(current.length + 3),
         message,
+        author: nextIndex % 2 === 0 ? "senior engineer" : "release custodian",
+        timestamp: `${current.length + 1} minutes ago`,
+        label: nextIndex === commitMessages.length - 1 ? "rollback risk" : "generated",
         note:
           nextIndex % 2 === 0
             ? "Likely produced under deadline pressure."
@@ -150,27 +156,16 @@ export function HomeExhibitionLabClient({
                     Generate commit
                   </button>
                 </div>
-                <div className="mt-6 space-y-3 border-l border-border pl-5">
-                  {commits.map((entry) => (
-                    <article
-                      key={entry.id}
-                      className="rounded-[1.25rem] border border-border bg-background/70 p-4"
-                    >
-                      <div className="flex items-center justify-between gap-3">
-                        <p className="font-mono text-xs uppercase tracking-[0.3em] text-muted">
-                          {entry.hash}
-                        </p>
-                        <span className="status-chip">Commit Record</span>
-                      </div>
-                      <p className="mt-3 font-mono text-base">{entry.message}</p>
-                      <p className="mt-2 text-sm text-muted">{entry.note}</p>
-                      {developerView ? (
-                        <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.28em] text-muted">
-                          internal note: confidence was overstated
-                        </p>
-                      ) : null}
-                    </article>
-                  ))}
+                <div className="mt-6">
+                  <CommitHistoryList
+                    title="Generated commit trail"
+                    items={commits.map((entry) => ({
+                      ...entry,
+                      note: developerView
+                        ? `${entry.note ?? ""} Internal note: confidence was overstated.`
+                        : entry.note,
+                    }))}
+                  />
                 </div>
               </section>
 
@@ -383,4 +378,3 @@ export function HomeExhibitionLabClient({
     </section>
   );
 }
-

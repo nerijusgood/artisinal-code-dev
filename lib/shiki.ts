@@ -29,6 +29,7 @@ export type HighlightedToken = {
 
 export type HighlightedLine = {
   number: number;
+  raw: string;
   tokens: HighlightedToken[];
 };
 
@@ -90,6 +91,7 @@ export const highlightCode = cache(
       language: normalizedLanguage,
       lines: tokens.map((line, index) => ({
         number: index + 1,
+        raw: line.map((token) => token.content).join(""),
         tokens: line.map((token) => ({
           content: token.content,
           color: token.color,
@@ -99,4 +101,3 @@ export const highlightCode = cache(
     };
   },
 );
-

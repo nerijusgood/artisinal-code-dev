@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { Placard } from "@/components/museum/placard";
 import { CodeArtifact } from "@/components/ui/code-artifact";
 import { Container } from "@/components/ui/container";
-import { getExhibitBySlug, getExhibitSlugs } from "@/lib/museum";
+import { getArtifactId, getExhibitBySlug, getExhibitSlugs } from "@/lib/museum";
 import { highlightCode } from "@/lib/shiki";
 
 export async function generateStaticParams() {
@@ -61,6 +61,16 @@ export default async function ExhibitPage({ params }: ExhibitPageProps) {
             filename={exhibit.artifactFilename}
             highlighted={highlighted}
             showLineNumbers={exhibit.artifactLineNumbers}
+            renderMode={exhibit.artifactRenderMode}
+            metadata={[
+              { label: "Artifact ID", value: getArtifactId(exhibit) },
+              { label: "Year", value: exhibit.year },
+              { label: "Language", value: exhibit.artifactLanguage },
+              { label: "Status", value: exhibit.status },
+              { label: "Origin", value: exhibit.classification },
+              { label: "Developer", value: exhibit.developer },
+              { label: "Preservation Note", value: exhibit.curatorNote },
+            ]}
           />
         </div>
         {exhibit.warningLabel ? (
