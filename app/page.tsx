@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HomeExhibitionLab } from "@/components/interactive/home-exhibition-lab";
 import { Container } from "@/components/ui/container";
 import { getExhibits } from "@/lib/museum";
 
@@ -23,42 +24,6 @@ const sellingPoints = [
     description:
       "Historically significant logic preserved behind comments, tests, and a tone of institutional caution.",
   },
-];
-
-const commitEntries = [
-  {
-    hash: "9af31d2",
-    title: "fix",
-    note: "Initial intervention. Confidence high, evidence limited.",
-  },
-  {
-    hash: "bd1e771",
-    title: "fix actual issue",
-    note: "Revised after contact with runtime behavior.",
-  },
-  {
-    hash: "ca20d44",
-    title: "final final",
-    note: "Added during emergency refactor. Not final.",
-  },
-];
-
-const escalationRows = [
-  ["Client request", '"simple landing page"'],
-  ["Week two clarification", "newsletter signup plus CMS"],
-  ["Stakeholder alignment", "authentication, payments, CRM"],
-  ["Late strategic opportunity", "AI assistant and mobile app"],
-  ["Final delivery contour", "platform, archive, dashboard, migration plan"],
-];
-
-const architectureLayers = [
-  "Button",
-  "ButtonPrimitive",
-  "InteractiveSurfaceProvider",
-  "VariantResolverBoundary",
-  "ThemeContextAdapter",
-  "LegacyCompatibilityShell",
-  "AnalyticsIntentBridge",
 ];
 
 export default async function HomePage() {
@@ -232,105 +197,7 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <section className="border-b border-border py-14">
-        <Container className="grid gap-8 lg:grid-cols-[18rem_minmax(0,1fr)]">
-          <div>
-            <p className="annotation">Architecture exhibit</p>
-            <h2 className="mt-4 text-4xl leading-tight">
-              The simple button implementation
-            </h2>
-          </div>
-          <div className="museum-panel p-8">
-            <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
-              <div className="space-y-5">
-                <p>
-                  This diagram documents the preservation of a modest user interface
-                  element after repeated rounds of responsible abstraction. The
-                  button remains technically clickable, though its governance burden
-                  has grown considerably.
-                </p>
-                <div className="space-y-3">
-                  {architectureLayers.map((layer, index) => (
-                    <div
-                      key={layer}
-                      className="rounded-[1.25rem] border border-border bg-background/70 p-4"
-                      style={{ marginLeft: `${index * 18}px` }}
-                    >
-                      <p className="annotation">Layer {index + 1}</p>
-                      <p className="mt-2 text-lg">{layer}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="tooling-panel p-5">
-                <p className="annotation">System note</p>
-                <p className="mt-3 text-lg leading-8">
-                  Introduced to support a secondary quiet destructive loading state
-                  requested after visual QA identified tonal ambiguity.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-b border-border py-14">
-        <Container className="grid gap-8 lg:grid-cols-[18rem_minmax(0,1fr)]">
-          <div>
-            <p className="annotation">Commit history wing</p>
-            <h2 className="mt-4 text-4xl leading-tight">Selected inscriptions</h2>
-          </div>
-          <div className="museum-panel p-8">
-            <div className="space-y-4 border-l border-border pl-6">
-              {commitEntries.map((entry) => (
-                <div
-                  key={entry.hash}
-                  className="grid gap-2 rounded-[1.25rem] border border-border bg-background/70 p-4 md:grid-cols-[7rem_minmax(0,1fr)]"
-                >
-                  <p className="font-mono text-xs uppercase tracking-[0.3em] text-muted">
-                    {entry.hash}
-                  </p>
-                  <div>
-                    <p className="font-mono text-sm text-foreground">{entry.title}</p>
-                    <p className="mt-2 text-muted">{entry.note}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-b border-border py-14">
-        <Container className="grid gap-8 lg:grid-cols-[18rem_minmax(0,1fr)]">
-          <div>
-            <p className="annotation">Client request escalation</p>
-            <h2 className="mt-4 text-4xl leading-tight">Scope growth under glass</h2>
-          </div>
-          <div className="museum-panel p-8">
-            <div className="grid gap-3">
-              {escalationRows.map(([label, value], index) => {
-                const rowClassName =
-                  index === 0
-                    ? "diff-add"
-                    : index === escalationRows.length - 1
-                      ? "legacy-warning"
-                      : "tooling-panel";
-
-                return (
-                  <div
-                    key={label}
-                    className={`${rowClassName} grid gap-2 p-4 md:grid-cols-[15rem_minmax(0,1fr)]`}
-                  >
-                    <p className="annotation">{label}</p>
-                    <p className="text-lg">{value}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </Container>
-      </section>
+      <HomeExhibitionLab />
 
       <section className="py-16">
         <Container className="museum-panel grid gap-8 p-8 sm:p-10 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-end">
